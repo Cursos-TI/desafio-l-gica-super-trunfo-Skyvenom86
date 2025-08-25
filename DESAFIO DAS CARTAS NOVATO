@@ -1,0 +1,104 @@
+# Cadastro de cartas de cidades
+def cadastrar_carta():
+    print("\n--- Cadastro de Carta ---")
+    estado = input("Digite o estado da cidade: ")
+    codigo = input("Digite o código da carta: ")
+    nome = input("Digite o nome da cidade: ")
+    
+    while True:
+        try:
+            populacao = int(input("Digite a população da cidade: "))
+            break
+        except ValueError:
+            print("Por favor, digite um número válido.")
+    
+    while True:
+        try:
+            area = float(input("Digite a área da cidade (km²): "))
+            break
+        except ValueError:
+            print("Por favor, digite um número válido.")
+    
+    while True:
+        try:
+            pib = float(input("Digite o PIB da cidade (em milhões): "))
+            break
+        except ValueError:
+            print("Por favor, digite um número válido.")
+    
+    while True:
+        try:
+            pontos_turisticos = int(input("Digite o número de pontos turísticos: "))
+            break
+        except ValueError:
+            print("Por favor, digite um número válido.")
+    
+    carta = {
+        "estado": estado,
+        "codigo": codigo,
+        "nome": nome,
+        "populacao": populacao,
+        "area": area,
+        "pib": pib,
+        "pontos_turisticos": pontos_turisticos
+    }
+    
+    return carta
+
+# Função de comparação
+def comparar_cartas(carta1, carta2, atributo):
+    print(f"\nComparando pelo atributo: {atributo}")
+    
+    if atributo == "densidade_populacional":
+        densidade1 = carta1["populacao"] / carta1["area"]
+        densidade2 = carta2["populacao"] / carta2["area"]
+        if densidade1 < densidade2:
+            vencedor = carta1
+        elif densidade2 < densidade1:
+            vencedor = carta2
+        else:
+            vencedor = None
+    else:
+        if carta1[atributo] > carta2[atributo]:
+            vencedor = carta1
+        elif carta2[atributo] > carta1[atributo]:
+            vencedor = carta2
+        else:
+            vencedor = None
+    
+    return vencedor
+
+# Exibição das cartas
+def mostrar_carta(carta):
+    print(f"\nCarta: {carta['nome']} ({carta['estado']})")
+    print(f"Código: {carta['codigo']}")
+    print(f"População: {carta['populacao']}")
+    print(f"Área: {carta['area']} km²")
+    print(f"PIB: {carta['pib']} milhões")
+    print(f"Pontos Turísticos: {carta['pontos_turisticos']}")
+
+# Programa principal
+print("Bem-vindo ao Super Trunfo - Países (Nível Novato)")
+
+# Cadastro das cartas
+carta1 = cadastrar_carta()
+carta2 = cadastrar_carta()
+
+# Mostrando cartas
+mostrar_carta(carta1)
+mostrar_carta(carta2)
+
+# Escolha do atributo para comparação
+atributos_validos = ["populacao", "area", "pib", "pontos_turisticos", "densidade_populacional"]
+while True:
+    atributo_escolhido = input(f"\nEscolha um atributo para comparação {atributos_validos}: ")
+    if atributo_escolhido in atributos_validos:
+        break
+    print("Atributo inválido. Tente novamente.")
+
+# Comparação
+vencedor = comparar_cartas(carta1, carta2, atributo_escolhido)
+if vencedor:
+    print(f"\n🏆 A carta vencedora é: {vencedor['nome']} ({vencedor['estado']})")
+else:
+    print("\n🤝 Empate entre as cartas!")
