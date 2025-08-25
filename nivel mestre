@@ -1,0 +1,31 @@
+# Cadastro de cartas
+def cadastrar_carta():
+    print("\n--- Cadastro de Carta ---")
+    estado = input("Digite o estado da cidade: ")
+    codigo = input("Digite o código da carta: ")
+    nome = input("Digite o nome da cidade: ")
+    
+    while True:
+        try:
+            populacao = int(input("Digite a população da cidade: "))
+            break
+        except ValueError:
+            print("Digite um número válido.")
+    
+    while True:
+        try:
+            area = float(input("Digite a área da cidade (km²): "))
+            break
+        except ValueError:
+            print("Digite um número válido.")
+    
+    while True:
+        try:
+            pib = float(input("Digite o PIB da cidade (em milhões): "))
+            break
+        except ValueError:
+            print("Digite um número válido.")
+    
+    while True:
+        try:
+            pontos_turisticos = int(input("Digite o número de pontos t_
