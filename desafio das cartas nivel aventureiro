@@ -1,0 +1,134 @@
+# Cadastro de cartas
+def cadastrar_carta():
+    print("\n--- Cadastro de Carta ---")
+    estado = input("Digite o estado da cidade: ")
+    codigo = input("Digite o código da carta: ")
+    nome = input("Digite o nome da cidade: ")
+    
+    while True:
+        try:
+            populacao = int(input("Digite a população da cidade: "))
+            break
+        except ValueError:
+            print("Digite um número válido.")
+    
+    while True:
+        try:
+            area = float(input("Digite a área da cidade (km²): "))
+            break
+        except ValueError:
+            print("Digite um número válido.")
+    
+    while True:
+        try:
+            pib = float(input("Digite o PIB da cidade (em milhões): "))
+            break
+        except ValueError:
+            print("Digite um número válido.")
+    
+    while True:
+        try:
+            pontos_turisticos = int(input("Digite o número de pontos turísticos: "))
+            break
+        except ValueError:
+            print("Digite um número válido.")
+    
+    carta = {
+        "estado": estado,
+        "codigo": codigo,
+        "nome": nome,
+        "populacao": populacao,
+        "area": area,
+        "pib": pib,
+        "pontos_turisticos": pontos_turisticos
+    }
+    
+    return carta
+
+# Mostrar carta
+def mostrar_carta(carta):
+    print(f"\nCarta: {carta['nome']} ({carta['estado']})")
+    print(f"Código: {carta['codigo']}")
+    print(f"População: {carta['populacao']}")
+    print(f"Área: {carta['area']} km²")
+    print(f"PIB: {carta['pib']} milhões")
+    print(f"Pontos Turísticos: {carta['pontos_turisticos']}")
+
+# Comparação aninhada
+def comparar_cartas(carta1, carta2, atributo):
+    match atributo:
+        case "populacao":
+            if carta1["populacao"] > carta2["populacao"]:
+                return carta1
+            elif carta2["populacao"] > carta1["populacao"]:
+                return carta2
+        case "area":
+            if carta1["area"] > carta2["area"]:
+                return carta1
+            elif carta2["area"] > carta1["area"]:
+                return carta2
+        case "pib":
+            if carta1["pib"] > carta2["pib"]:
+                return carta1
+            elif carta2["pib"] > carta1["pib"]:
+                return carta2
+        case "pontos_turisticos":
+            if carta1["pontos_turisticos"] > carta2["pontos_turisticos"]:
+                return carta1
+            elif carta2["pontos_turisticos"] > carta1["pontos_turisticos"]:
+                return carta2
+        case "densidade_populacional":
+            dens1 = carta1["populacao"] / carta1["area"]
+            dens2 = carta2["populacao"] / carta2["area"]
+            if dens1 < dens2:
+                return carta1
+            elif dens2 < dens1:
+                return carta2
+    return None  # Empate
+
+# Menu interativo
+def menu_atributos():
+    print("\nEscolha o atributo para comparação:")
+    print("1 - População")
+    print("2 - Área")
+    print("3 - PIB")
+    print("4 - Pontos Turísticos")
+    print("5 - Densidade Populacional (menor vence)")
+    
+    while True:
+        opcao = input("Digite o número da opção: ")
+        match opcao:
+            case "1":
+                return "populacao"
+            case "2":
+                return "area"
+            case "3":
+                return "pib"
+            case "4":
+                return "pontos_turisticos"
+            case "5":
+                return "densidade_populacional"
+            case _:
+                print("Opção inválida. Tente novamente.")
+
+# Programa principal
+print("Bem-vindo ao Super Trunfo - Países (Nível Aventureiro)")
+
+# Cadastro das cartas
+carta1 = cadastrar_carta()
+carta2 = cadastrar_carta()
+
+# Mostrando cartas
+mostrar_carta(carta1)
+mostrar_carta(carta2)
+
+# Menu de escolha
+atributo_escolhido = menu_atributos()
+
+# Comparação
+vencedor = comparar_cartas(carta1, carta2, atributo_escolhido)
+if vencedor:
+    print(f"\n🏆 A carta vencedora é: {vencedor['nome']} ({vencedor['estado']})")
+    print(f"Atributo utilizado: {atributo_escolhido.replace('_',' ').title()}")
+else:
+    print("\n🤝 Empate entre as cartas!")
